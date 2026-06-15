@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AutoTire - Conecta con los mejores mayoristas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#3c475a",
+                        "tertiary-container": "#1f2a3b",
+                        "on-secondary-fixed": "#341000",
+                        "on-surface-variant": "#44474c",
+                        "on-background": "#191c1d",
+                        "on-secondary-fixed-variant": "#7a3000",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#ffdbcb",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#c4c6cd",
+                        "tertiary-fixed-dim": "#bcc7dd",
+                        "surface-dim": "#d9dadb",
+                        "inverse-primary": "#b7c8de",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#edeeef",
+                        "secondary-container": "#fc7728",
+                        "inverse-surface": "#2e3132",
+                        "surface-container-high": "#e7e8e9",
+                        "tertiary": "#0a1526",
+                        "inverse-on-surface": "#f0f1f2",
+                        "on-secondary": "#ffffff",
+                        "surface": "#f8f9fa",
+                        "primary-container": "#1a2b3c",
+                        "on-primary-fixed-variant": "#38485a",
+                        "surface-variant": "#e1e3e4",
+                        "on-secondary-container": "#5d2300",
+                        "on-primary-container": "#8192a7",
+                        "surface-container-lowest": "#ffffff",
+                        "background": "#f8f9fa",
+                        "on-tertiary-container": "#8691a6",
+                        "secondary-fixed-dim": "#ffb693",
+                        "surface-tint": "#4f6073",
+                        "surface-bright": "#f8f9fa",
+                        "primary-fixed-dim": "#b7c8de",
+                        "secondary": "#a04100",
+                        "outline": "#74777d",
+                        "on-surface": "#191c1d",
+                        "tertiary-fixed": "#d8e3fa",
+                        "on-primary-fixed": "#0b1d2d",
+                        "surface-container-low": "#f3f4f5",
+                        "primary-fixed": "#d2e4fb",
+                        "on-tertiary-fixed": "#111c2c",
+                        "on-error-container": "#93000a",
+                        "primary": "#041627",
+                        "surface-container-highest": "#e1e3e4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "margin-desktop": "32px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["JetBrains Mono"],
+                        "display-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "14px", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+        .search-tab-active {
+            border-bottom: 3px solid #fc7728;
+            color: #191c1d;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        body {
+            background-color: #f8f9fa;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-on-background pb-24">
+<!-- TopAppBar -->
+<header class="bg-surface sticky top-0 z-[60] border-b border-outline-variant flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-base">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="location_on">location_on</span>
+<span class="font-display-lg text-secondary tracking-tight font-black">AutoTire</span>
+</div>
+<!-- Desktop Nav -->
+<nav class="hidden md:flex gap-8">
+<a class="text-secondary font-bold font-label-md text-label-md" href="#">Search</a>
+<a class="text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-md text-label-md px-2 py-1 rounded" href="#">Orders</a>
+<a class="text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-md text-label-md px-2 py-1 rounded" href="#">Inventory</a>
+<a class="text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-md text-label-md px-2 py-1 rounded" href="#">Profile</a>
+</nav>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="search">search</span>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mt-8">
+<!-- Hero Section -->
+<section class="relative rounded-xl overflow-hidden mb-12 min-h-[400px] flex items-center p-8 md:p-16">
+<div class="absolute inset-0 z-0">
+<img alt="Automotive background" class="w-full h-full object-cover brightness-[0.4]" data-alt="A professional warehouse interior with rows of high-performance tires stacked on industrial shelving units. The lighting is cinematic with cool blue tones and warm orange highlights reflecting off rubber surfaces. The perspective is low and dramatic, emphasizing the vast scale of the inventory in a clean, modern industrial setting with a Corporate Modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMac_jKwi88v7_4FSIvTaofSDot8r0g6Xs9wTL8FjarVnd6bbI4EWgkK1k4W0HZCJKhQD8SdfxExl0plMqa86bN_r9IcwhpZEVSCjVYvUyBqku4BqEKXKJE3v3xezFlQB97SIJ4V1-cDdHlT5Dshat2nmEtiSUMJ2eCAqO5b--mjgagE0QqP_aT2NU9Uvh8ZT4pz5CN6BkHTcIGLZE0SXcbUMBLIuJXWfK3jRwWqsmtpR8s8_gR7UW9gF8E0Taz0j5HiDShAPyFA"/>
+</div>
+<div class="relative z-10 max-w-2xl">
+<h1 class="text-white font-display-lg text-display-lg-mobile md:text-display-lg mb-4 leading-tight">
+                    Conecta con los mejores mayoristas de Venezuela
+                </h1>
+<p class="text-white/80 font-body-lg text-body-lg mb-8 max-w-lg">
+                    La plataforma líder en repuestos y neumáticos para flotas comerciales y particulares. Calidad garantizada.
+                </p>
+<button class="bg-secondary-container hover:scale-95 transition-all text-white px-8 py-4 rounded-lg font-bold flex items-center gap-2 shadow-lg border-b-4 border-secondary">
+                    Explorar Catálogo
+                    <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<!-- Geo-location Toggle -->
+<div class="absolute bottom-6 right-6 md:right-12">
+<button class="glass-card flex items-center gap-2 px-6 py-3 rounded-full text-primary font-bold shadow-xl hover:bg-white transition-all">
+<span class="material-symbols-outlined text-secondary-container" data-icon="my_location" style="font-variation-settings: 'FILL' 1;">my_location</span>
+                    Find tires near me
+                </button>
+</div>
+</section>
+<!-- Prominent Search Engine Engine -->
+<section class="mb-16 -mt-24 relative z-20">
+<div class="bg-surface-container-lowest rounded-2xl shadow-[0px_12px_24px_rgba(26,43,60,0.15)] p-6 md:p-10 border border-outline-variant">
+<div class="flex gap-8 mb-8 border-b border-outline-variant">
+<button class="pb-4 font-label-md text-label-md font-bold search-tab-active flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="tire_repair">tire_repair</span>
+                        Por Medida
+                    </button>
+<button class="pb-4 font-label-md text-label-md font-medium text-on-surface-variant hover:text-primary flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="directions_car">directions_car</span>
+                        Por Vehículo
+                    </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant flex items-center gap-1">
+                            Ancho (Width)
+                        </label>
+<select class="w-full bg-white border border-outline rounded-lg px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all font-label-md outline-none">
+<option>205</option>
+<option>215</option>
+<option>225</option>
+<option>235</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant">Perfil (Ratio)</label>
+<select class="w-full bg-white border border-outline rounded-lg px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all font-label-md outline-none">
+<option>55</option>
+<option>60</option>
+<option>65</option>
+<option>70</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant">Rin (Rim)</label>
+<select class="w-full bg-white border border-outline rounded-lg px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all font-label-md outline-none">
+<option>15"</option>
+<option>16"</option>
+<option>17"</option>
+<option>18"</option>
+</select>
+</div>
+<div class="flex items-end">
+<button class="w-full bg-secondary-container text-white rounded-lg py-3.5 font-bold flex items-center justify-center gap-2 hover:brightness-110 transition-all shadow-md">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+                            BUSCAR NEUMÁTICOS
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Categories -->
+<section class="mb-16">
+<div class="flex justify-between items-center mb-8">
+<h2 class="font-headline-md text-headline-md text-primary">Categorías Destacadas</h2>
+<a class="text-secondary font-bold flex items-center gap-1 hover:underline" href="#">
+                    Ver todo <span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</a>
+</div>
+<div class="bento-grid">
+<!-- Passenger -->
+<div class="col-span-12 md:col-span-6 lg:col-span-4 group cursor-pointer overflow-hidden rounded-2xl relative h-80 bg-surface-container-high border border-outline-variant">
+<img alt="Passenger tires" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A close-up shot of a sleek passenger car tire tread on a polished white studio floor. The lighting is crisp and commercial, with soft shadows and high-contrast blacks. The background is a clean, minimalist gradient that reflects an efficient and modern automotive shopping experience, focusing on high-quality rubber texture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1hW8Bf49fArEMfVaGMcVTSygE3Cv7FoOO-yCgLbkTKgES5oJEMVQxSTgCktrIcuZAbijn6ljDQxYZVrxWvt29eH7x_iIPApndrfp2T5PqW6Dee3Gf7MKRWhhmZj4HqkWNoUZ7t4ZwpUZc2RoBVLcFDZ2s3xySiVWiRFNkFs8tnUfkPn_tlwyjl-XPvkZa0aKFSGM7tiaNrYJUympdIOOJ25u6wryiRyL0siuohmMvfAsSAW3EMe3OcSEqC22TzW9QPsY4PfLAWQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-6 text-white">
+<span class="font-label-sm text-label-sm bg-secondary-container text-white px-2 py-1 rounded w-fit mb-2">Populares</span>
+<h3 class="font-headline-md text-headline-md">Passenger</h3>
+<p class="text-white/70 font-body-sm">Confort y seguridad para tu día a día.</p>
+</div>
+</div>
+<!-- SUV -->
+<div class="col-span-12 md:col-span-6 lg:col-span-4 group cursor-pointer overflow-hidden rounded-2xl relative h-80 bg-surface-container-high border border-outline-variant">
+<img alt="SUV tires" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A rugged 4x4 SUV tire equipped for off-road terrain, partially covered in dry mud to emphasize durability. The setting is a bright, sun-drenched outdoor path with a shallow depth of field. The image quality is professional, evoking a sense of adventure and reliability within the AutoTire industrial design framework." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnL8W_RJL_t98VHuYwBzUq7VbFe5ZKjQn-uJZ_5sjyBnMuUEaUZ_Rzbk_y14tcUeZ9UI8smi9mTw9U_0qswoWbcvpoKbwO6-8wykgw3GgJmm0D0jqCPvHBcKP2l7diiAYNF6CC3TvoPr3a8xAo_EZDxEoop3wQsd5oF-uxpIC6Yox04hdbSNuFUo6IFFddFd_HvsRBjBxV5vhmbW1GfjBwkbPxoWPcP4P6Wlj7deF7mzbBYPrpUTsVhBu5Uv-Knu5ni_qRBc9Azg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-6 text-white">
+<h3 class="font-headline-md text-headline-md">SUV</h3>
+<p class="text-white/70 font-body-sm">Tracción total para cualquier terreno.</p>
+</div>
+</div>
+<!-- Truck -->
+<div class="col-span-12 md:col-span-12 lg:col-span-4 group cursor-pointer overflow-hidden rounded-2xl relative h-80 bg-surface-container-high border border-outline-variant">
+<img alt="Truck tires" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Massive industrial truck tires lined up in a warehouse, showing their deep treads and heavy-duty construction. The lighting is professional warehouse lighting with a technical, high-precision feel. The palette uses industrial navys and deep greys to match the AutoTire brand identity for heavy-velocity commerce." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbJvMkCZvDrEHEtQoiCZt4z_YIc37-PkdbCfpWspvPWpdiqT_NyU_mkwz3C0KvVdSVPVpm8X0gWJ2BDLmoHyj-AvNCv6TMgm99nuy4jyPttvFDYj49o2rvqAGuCZJ6G32_GJccj3ovckD-C_OeTjO9tzDbx55kTqbHj4fWGaT9MAMIjH74t3cy9pGJ1FvnuL5x4B4vzi1ghT9rl2iICVLHCqLW1Ls_08c1QL8PbV-L7nCuUt2l26bdzWO0wyvNrh6Xim59n3WBAQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-6 text-white">
+<h3 class="font-headline-md text-headline-md">Truck</h3>
+<p class="text-white/70 font-body-sm">Resistencia máxima para carga pesada.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Deals of the Week -->
+<section class="mb-20">
+<div class="bg-primary text-white rounded-2xl p-8 md:p-12 relative overflow-hidden flex flex-col md:flex-row items-center justify-between">
+<div class="relative z-10 text-center md:text-left mb-8 md:mb-0">
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg mb-2">Ofertas de la Semana</h2>
+<p class="text-primary-container font-body-lg text-body-lg mb-6">Descuentos de hasta 30% en marcas seleccionadas de equipo pesado.</p>
+<div class="flex flex-wrap gap-4 justify-center md:justify-start">
+<div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 min-w-[100px]">
+<span class="block text-2xl font-black">02</span>
+<span class="text-xs uppercase tracking-widest opacity-60">Días</span>
+</div>
+<div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 min-w-[100px]">
+<span class="block text-2xl font-black">14</span>
+<span class="text-xs uppercase tracking-widest opacity-60">Horas</span>
+</div>
+<div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 min-w-[100px]">
+<span class="block text-2xl font-black">45</span>
+<span class="text-xs uppercase tracking-widest opacity-60">Min</span>
+</div>
+</div>
+</div>
+<div class="relative z-10 bg-white rounded-2xl p-6 text-primary max-w-sm shadow-2xl">
+<div class="flex justify-between mb-4">
+<span class="bg-error-container text-on-error-container px-2 py-1 rounded font-bold text-xs">OFERTA FLASH</span>
+<span class="text-success-green font-bold text-xs flex items-center gap-1">
+<span class="w-2 h-2 bg-green-500 rounded-full"></span> In Stock
+                        </span>
+</div>
+<img alt="Michelin Tire" class="w-full h-40 object-contain mb-4" data-alt="A premium Michelin tire centered in a studio shot with bright, even lighting. The brand logo is clearly visible on the sidewall. The image reflects a clean retail experience with focus on product detail and quality, using a soft grey background for a minimalist and efficient look." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlGqIvmmq6wxAwKIPH2_IG17OO8FwwQqEOwp3vsnM_cOgVHnIc7tcm1vBa76bDMbk0UO_0Upm0LC0gvQrhA6QcLaU6r1ud3TOqLe62Yai0RpKducQ8_WFX2i-hhInpZ3JRAT_GZfvgCvixTgiU2df1dxrFNOCgEdc8TEmf85gsUQ_GLpkR5ILVuyDkhajumFoaUSvmufaDHrRoGy2sZpn51DQc7izEyNk6A3aUzRkZ3LwyOKwWPzo1GQ-3ixHS6fr2Ditu29N0Ng"/>
+<h4 class="font-headline-md text-headline-md text-lg mb-1">Michelin Pilot Sport 4S</h4>
+<p class="text-on-surface-variant font-body-sm mb-4">245/40 R18 - Rendimiento Superior</p>
+<div class="flex items-center justify-between">
+<div>
+<span class="text-on-surface-variant line-through text-sm">$185.00</span>
+<div class="text-secondary font-black text-2xl">$129.99</div>
+</div>
+<button class="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="add_shopping_cart">add_shopping_cart</span>
+</button>
+</div>
+</div>
+<!-- Abstract Decorative Elements -->
+<div class="absolute -right-20 -top-20 w-80 h-80 bg-secondary/20 rounded-full blur-3xl"></div>
+<div class="absolute -left-20 -bottom-20 w-80 h-80 bg-primary-container/40 rounded-full blur-3xl"></div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 pb-safe px-4 bg-surface-container-lowest shadow-[0px_-4px_12px_rgba(26,43,60,0.08)] rounded-t-xl">
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-1 scale-90 duration-150 ease-in-out">
+<span class="material-symbols-outlined" data-icon="search" style="font-variation-settings: 'FILL' 1;">search</span>
+<span class="font-label-sm text-label-sm-mobile">Search</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-variant">
+<span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
+<span class="font-label-sm text-label-sm-mobile">Orders</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-variant">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label-sm text-label-sm-mobile">Inventory</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-variant">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm-mobile">Profile</span>
+</button>
+</nav>
+<script>
+        // Simple Interaction logic
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => btn.classList.add('opacity-80', 'scale-95'));
+            btn.addEventListener('mouseup', () => btn.classList.remove('opacity-80', 'scale-95'));
+            btn.addEventListener('mouseleave', () => btn.classList.remove('opacity-80', 'scale-95'));
+        });
+    </script>
+</body></html>

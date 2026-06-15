@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Tracking | AutoTire</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed-variant": "#3c475a",
+                    "tertiary-container": "#1f2a3b",
+                    "on-secondary-fixed": "#341000",
+                    "on-surface-variant": "#44474c",
+                    "on-background": "#191c1d",
+                    "on-secondary-fixed-variant": "#7a3000",
+                    "error-container": "#ffdad6",
+                    "error": "#ba1a1a",
+                    "on-error": "#ffffff",
+                    "secondary-fixed": "#ffdbcb",
+                    "on-primary": "#ffffff",
+                    "outline-variant": "#c4c6cd",
+                    "tertiary-fixed-dim": "#bcc7dd",
+                    "surface-dim": "#d9dadb",
+                    "inverse-primary": "#b7c8de",
+                    "on-tertiary": "#ffffff",
+                    "surface-container": "#edeeef",
+                    "secondary-container": "#fc7728",
+                    "inverse-surface": "#2e3132",
+                    "surface-container-high": "#e7e8e9",
+                    "tertiary": "#0a1526",
+                    "inverse-on-surface": "#f0f1f2",
+                    "on-secondary": "#ffffff",
+                    "surface": "#f8f9fa",
+                    "primary-container": "#1a2b3c",
+                    "on-primary-fixed-variant": "#38485a",
+                    "surface-variant": "#e1e3e4",
+                    "on-secondary-container": "#5d2300",
+                    "on-primary-container": "#8192a7",
+                    "surface-container-lowest": "#ffffff",
+                    "background": "#f8f9fa",
+                    "on-tertiary-container": "#8691a6",
+                    "secondary-fixed-dim": "#ffb693",
+                    "surface-tint": "#4f6073",
+                    "surface-bright": "#f8f9fa",
+                    "primary-fixed-dim": "#b7c8de",
+                    "secondary": "#a04100",
+                    "outline": "#74777d",
+                    "on-surface": "#191c1d",
+                    "tertiary-fixed": "#d8e3fa",
+                    "on-primary-fixed": "#0b1d2d",
+                    "surface-container-low": "#f3f4f5",
+                    "primary-fixed": "#d2e4fb",
+                    "on-tertiary-fixed": "#111c2c",
+                    "on-error-container": "#93000a",
+                    "primary": "#041627",
+                    "surface-container-highest": "#e1e3e4"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "container-max": "1280px",
+                    "margin-desktop": "32px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-md": ["Inter"],
+                    "label-md": ["JetBrains Mono"],
+                    "display-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "14px", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .step-active {
+            @apply border-secondary-container bg-secondary-container text-white;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md selection:bg-secondary-fixed">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-surface border-b border-outline-variant flex justify-between items-center px-margin-mobile md:px-margin-desktop py-base">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer" data-icon="location_on">location_on</span>
+<h1 class="font-display-lg text-headline-md text-secondary tracking-tight font-black">AutoTire</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="search">search</span>
+</button>
+</div>
+</header>
+<main class="pt-20 pb-24 min-h-screen max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<!-- Header Section -->
+<div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<span class="font-label-md text-label-md text-secondary uppercase tracking-widest">Order Status</span>
+<h2 class="font-headline-md text-headline-md mt-1">Invoice #AT-8829410</h2>
+</div>
+<div class="flex items-center gap-3 bg-surface-container-low px-4 py-2 rounded-xl border border-outline-variant">
+<span class="font-label-md text-label-md text-on-surface-variant">Push Notifications</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary-container"></div>
+</label>
+</div>
+</div>
+<!-- Main Layout Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Stepper & Map -->
+<div class="lg:col-span-8 space-y-gutter">
+<!-- Stepper Card -->
+<div class="bg-surface-container-lowest rounded-xl p-gutter border border-outline-variant shadow-[0px_4px_12px_rgba(26,43,60,0.08)]">
+<div class="relative flex justify-between items-start">
+<!-- Connecting Line -->
+<div class="absolute top-5 left-8 right-8 h-1 bg-surface-variant z-0">
+<div class="h-full bg-secondary-container w-[66%] transition-all duration-1000 ease-out"></div>
+</div>
+<!-- Step 1: Confirmed -->
+<div class="relative z-10 flex flex-col items-center gap-2 group">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[20px]" data-icon="check" style="font-variation-settings: 'wght' 700">check</span>
+</div>
+<span class="font-label-md text-label-sm md:text-label-md text-on-surface font-bold">Confirmed</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Oct 12, 09:15</span>
+</div>
+<!-- Step 2: In Warehouse -->
+<div class="relative z-10 flex flex-col items-center gap-2 group">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[20px]" data-icon="inventory_2" style="font-variation-settings: 'wght' 700">inventory_2</span>
+</div>
+<span class="font-label-md text-label-sm md:text-label-md text-on-surface font-bold">In Warehouse</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Oct 12, 14:30</span>
+</div>
+<!-- Step 3: In Transit (Active) -->
+<div class="relative z-10 flex flex-col items-center gap-2 group">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary flex items-center justify-center shadow-lg ring-4 ring-secondary-fixed ring-opacity-50">
+<span class="material-symbols-outlined text-[20px] animate-pulse" data-icon="local_shipping" style="font-variation-settings: 'wght' 700">local_shipping</span>
+</div>
+<span class="font-label-md text-label-sm md:text-label-md text-secondary font-bold">In Transit</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">In Progress</span>
+</div>
+<!-- Step 4: Ready -->
+<div class="relative z-10 flex flex-col items-center gap-2 group">
+<div class="w-10 h-10 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center border-2 border-dashed border-outline">
+<span class="material-symbols-outlined text-[20px]" data-icon="build_circle">build_circle</span>
+</div>
+<span class="font-label-md text-label-sm md:text-label-md text-on-surface-variant">Installation</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Pending</span>
+</div>
+</div>
+</div>
+<!-- Map View Placeholder -->
+<div class="relative rounded-xl overflow-hidden border border-outline-variant h-[450px] shadow-lg group">
+<img alt="Map view" class="w-full h-full object-cover grayscale-[20%] group-hover:scale-105 transition-transform duration-700" data-alt="A clean, high-contrast overhead map view showing a technical automotive route through a modern industrial park. The map features a professional color palette of slate grays and muted blues with a prominent velocity orange line tracing the delivery vehicle's path. Small, sleek geometric icons represent the logistics hub and the destination garage. The lighting is crisp and uniform, evoking a high-precision GPS interface design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7MTQDrZnrmgGVpeNJesLSGzq4D2vyhWM0wcls9NkoCbGoJ7dSDfXCwIVmZNc_fgFaxsrStchSBNC8mm7Kwg3Bnk4bk0mhnB577CUC3nt4j_ZJCqoiQ83Pq5_ZHGolzcx8TXeiZ_B661c8mx0SdhTHhDha1MVd87MjwuCAuLY8NfPNQtLBWvGnfe2HxcNRfNfOLU7ltIOVUGluACFNO-k2sNpfUz9lyxSpiBXTK_b0j1LbNiYxrQc7ZQu0WbS760QFrEZ8gT4y3w"/>
+<!-- Real-time overlay -->
+<div class="absolute inset-0 bg-primary/5 pointer-events-none"></div>
+<!-- Floating Truck Info -->
+<div class="absolute top-4 left-4 glass-panel p-4 rounded-xl border border-white/20 shadow-xl max-w-xs">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-secondary-container rounded-lg">
+<span class="material-symbols-outlined text-white" data-icon="local_shipping">local_shipping</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-primary font-bold">Truck #442-B</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Moving: 45 mph</p>
+</div>
+</div>
+</div>
+<!-- Location Pin -->
+<div class="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+<div class="relative">
+<div class="absolute inset-0 bg-secondary-container/40 rounded-full animate-ping"></div>
+<div class="relative bg-secondary-container p-2 rounded-full shadow-lg border-2 border-white">
+<span class="material-symbols-outlined text-white text-[20px]" data-icon="local_shipping" style="font-variation-settings: 'FILL' 1">local_shipping</span>
+</div>
+</div>
+</div>
+<!-- Destination Info -->
+<div class="absolute bottom-4 right-4 glass-panel p-4 rounded-xl border border-white/20 shadow-xl">
+<p class="font-label-sm text-label-sm text-secondary uppercase font-bold mb-1">Estimated Arrival</p>
+<p class="font-headline-md text-headline-md text-primary">15:45 PM</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Cauchera Los Sauces, Bay Area</p>
+</div>
+</div>
+</div>
+<!-- Right Column: Order Details -->
+<div class="lg:col-span-4 space-y-gutter">
+<!-- Items Summary -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-gutter shadow-[0px_4px_12px_rgba(26,43,60,0.08)]">
+<h3 class="font-headline-md text-headline-md mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="inventory_2">inventory_2</span>
+                        Order Items
+                    </h3>
+<div class="space-y-4">
+<div class="flex gap-4 p-2 hover:bg-surface-container-low transition-colors rounded-lg group">
+<div class="w-16 h-16 rounded-lg bg-surface-variant flex-shrink-0 overflow-hidden border border-outline-variant">
+<img alt="Tire" class="w-full h-full object-cover" data-alt="A macro photograph of a high-performance all-season tire tread with deep grooves and precise rubber texturing. The tire is presented in a studio setting with dramatic, low-key lighting that emphasizes the industrial durability and engineering precision. The color palette is composed of deep charcoals and matte blacks, fitting the sleek and robust aesthetic of the AutoTire brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiAh1WDYwhBMdf32OgZLwqSbefmZWguSezsyvdHw40LXP60euAlzFkQL4TvBpdDf-wH6ZZLLNAeIMxD6rwogQ-CnKZCf56mk4-LkxJeD5waKXFjM3aLIgwop_GjUIiT1IqNDJK_9J8_ZXUqDPQRsm2UIgXgeVDZvxKGkI0vwEWLpd6XO0CjEopgIBKdtB5kzSLPlc1UHzgtop-tYu95xakBqEnyGtUNHxrG_smt7Y0MAO4zI6DldXdZNXmgm8M7RYWLLDBYCrD9Q"/>
+</div>
+<div class="flex-grow">
+<p class="font-label-md text-label-md text-primary font-bold">Michelin Pilot Sport 4S</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Qty: 4 • 245/40R18</p>
+<p class="font-label-md text-label-md text-secondary mt-1 font-bold">$840.00</p>
+</div>
+</div>
+<div class="flex gap-4 p-2 hover:bg-surface-container-low transition-colors rounded-lg group">
+<div class="w-16 h-16 rounded-lg bg-surface-variant flex-shrink-0 overflow-hidden border border-outline-variant">
+<img alt="Valves" class="w-full h-full object-cover" data-alt="Close-up detail of high-quality metallic tire valve stems and caps laid out on a clean, industrial workbench. The lighting is sharp and bright, highlighting the reflective chrome surfaces and the meticulous design. The background is a soft-focus gray, ensuring the technical components stand out as premium automotive accessories." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqy2jZKI2wKVHxrmp8F6vb7ZF3keUfgLCBYwopzdI8c4Zri5Ysq-132MXiuimtIFmnMsNRKWVM-QgFQy2gW6kPVQkT8NnlhowJmXxLn8JjfyFa_0UUusXbduKfbmRNjQ3jYlfHpOViMvjDlg8EhW4stB8Vb3wtGjhuNUafQIRV5lnXfJlvhUD6WAaNpBKxPEjiGe6fC9f5UJEMwSR0S_ZwZlo7DVmma5M1Y4bb7lAU18mlbaeSrhJNseXnU-dvmHN0dB_PA7E_2w"/>
+</div>
+<div class="flex-grow">
+<p class="font-label-md text-label-md text-primary font-bold">Installation Kit</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Qty: 1 • Valves &amp; Balancing</p>
+<p class="font-label-md text-label-md text-secondary mt-1 font-bold">$45.00</p>
+</div>
+</div>
+</div>
+<div class="mt-6 pt-6 border-t border-outline-variant">
+<div class="flex justify-between mb-2">
+<span class="text-on-surface-variant font-label-md">Subtotal</span>
+<span class="text-primary font-label-md">$885.00</span>
+</div>
+<div class="flex justify-between mb-4">
+<span class="text-on-surface-variant font-label-md">Delivery &amp; Tax</span>
+<span class="text-primary font-label-md">$62.40</span>
+</div>
+<div class="flex justify-between items-center bg-primary text-white p-3 rounded-lg">
+<span class="font-label-md font-bold">Total Paid</span>
+<span class="font-headline-md">$947.40</span>
+</div>
+</div>
+</div>
+<!-- Delivery Details -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-gutter shadow-[0px_4px_12px_rgba(26,43,60,0.08)]">
+<h3 class="font-headline-md text-headline-md mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="location_on">location_on</span>
+                        Destination
+                    </h3>
+<div class="space-y-4">
+<div class="bg-surface-container-low p-4 rounded-xl">
+<p class="font-label-sm text-label-sm text-secondary uppercase font-bold mb-1">Cauchera Location</p>
+<p class="font-body-md text-body-md text-primary font-bold">Cauchera Los Sauces</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">128 Industrial Way, Suite 400</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">San Francisco, CA 94107</p>
+<button class="mt-3 flex items-center gap-2 text-secondary font-label-md hover:underline">
+<span class="material-symbols-outlined text-[18px]" data-icon="directions">directions</span>
+                                Get Directions
+                            </button>
+</div>
+<div class="flex items-start gap-3 p-2">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="call">call</span>
+<div>
+<p class="font-label-md text-label-md text-primary">Warehouse Manager</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">+1 (555) 829-4401</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Support Card -->
+<div class="bg-primary-container text-on-primary-container p-gutter rounded-xl shadow-lg relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="font-headline-md text-headline-md text-white mb-2">Need Help?</h4>
+<p class="font-body-sm text-body-sm text-on-primary-container mb-4 opacity-90">Our logistics team is available 24/7 for order inquiries.</p>
+<button class="w-full bg-secondary-container text-white font-label-md py-3 rounded-lg font-bold hover:scale-[1.02] transition-transform active:scale-95 shadow-md">
+                            Contact Support
+                        </button>
+</div>
+<!-- Abstract background element -->
+<div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-surface-container-lowest shadow-[0px_-4px_12px_rgba(26,43,60,0.08)] flex justify-around items-center pt-2 pb-safe px-4 rounded-t-xl h-16">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-variant transition-colors rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-1 scale-90 duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="local_shipping" style="font-variation-settings: 'FILL' 1">local_shipping</span>
+<span class="font-label-sm text-label-sm">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-variant transition-colors rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Inventory</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-variant transition-colors rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for stepper progress
+        document.addEventListener('DOMContentLoaded', () => {
+            const progressBar = document.querySelector('.bg-secondary-container.w-\\[66\\%\\]');
+            if(progressBar) {
+                setTimeout(() => {
+                    progressBar.style.width = '66%';
+                }, 300);
+            }
+
+            // Simple notification toggle interaction
+            const toggle = document.querySelector('input[type="checkbox"]');
+            toggle.addEventListener('change', (e) => {
+                if(e.target.checked) {
+                    console.log('Notifications Enabled');
+                } else {
+                    console.log('Notifications Disabled');
+                }
+            });
+        });
+    </script>
+</body></html>

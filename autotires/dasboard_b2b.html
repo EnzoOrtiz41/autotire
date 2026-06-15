@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AutoTire B2B Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed-variant": "#3c475a",
+                    "tertiary-container": "#1f2a3b",
+                    "on-secondary-fixed": "#341000",
+                    "on-surface-variant": "#44474c",
+                    "on-background": "#191c1d",
+                    "on-secondary-fixed-variant": "#7a3000",
+                    "error-container": "#ffdad6",
+                    "error": "#ba1a1a",
+                    "on-error": "#ffffff",
+                    "secondary-fixed": "#ffdbcb",
+                    "on-primary": "#ffffff",
+                    "outline-variant": "#c4c6cd",
+                    "tertiary-fixed-dim": "#bcc7dd",
+                    "surface-dim": "#d9dadb",
+                    "inverse-primary": "#b7c8de",
+                    "on-tertiary": "#ffffff",
+                    "surface-container": "#edeeef",
+                    "secondary-container": "#fc7728",
+                    "inverse-surface": "#2e3132",
+                    "surface-container-high": "#e7e8e9",
+                    "tertiary": "#0a1526",
+                    "inverse-on-surface": "#f0f1f2",
+                    "on-secondary": "#ffffff",
+                    "surface": "#f8f9fa",
+                    "primary-container": "#1a2b3c",
+                    "on-primary-fixed-variant": "#38485a",
+                    "surface-variant": "#e1e3e4",
+                    "on-secondary-container": "#5d2300",
+                    "on-primary-container": "#8192a7",
+                    "surface-container-lowest": "#ffffff",
+                    "background": "#f8f9fa",
+                    "on-tertiary-container": "#8691a6",
+                    "secondary-fixed-dim": "#ffb693",
+                    "surface-tint": "#4f6073",
+                    "surface-bright": "#f8f9fa",
+                    "primary-fixed-dim": "#b7c8de",
+                    "secondary": "#a04100",
+                    "outline": "#74777d",
+                    "on-surface": "#191c1d",
+                    "tertiary-fixed": "#d8e3fa",
+                    "on-primary-fixed": "#0b1d2d",
+                    "surface-container-low": "#f3f4f5",
+                    "primary-fixed": "#d2e4fb",
+                    "on-tertiary-fixed": "#111c2c",
+                    "on-error-container": "#93000a",
+                    "primary": "#041627",
+                    "surface-container-highest": "#e1e3e4"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "container-max": "1280px",
+                    "margin-desktop": "32px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-md": ["Inter"],
+                    "label-md": ["JetBrains Mono"],
+                    "display-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "14px", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-tertiary border-b border-outline-variant dark:border-outline fixed top-0 w-full z-50">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-base">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed">location_on</span>
+<h1 class="font-display-lg text-secondary dark:text-secondary-fixed-dim tracking-tight font-black text-2xl md:text-3xl">AutoTire</h1>
+</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-secondary dark:text-secondary-fixed font-bold font-label-md text-label-md transition-all opacity-80 scale-95" href="#">Dashboard</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container font-label-md text-label-md hover:bg-surface-container-high dark:hover:bg-tertiary-container transition-colors px-3 py-1 rounded-lg" href="#">Orders</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container font-label-md text-label-md hover:bg-surface-container-high dark:hover:bg-tertiary-container transition-colors px-3 py-1 rounded-lg" href="#">Inventory</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container font-label-md text-label-md hover:bg-surface-container-high dark:hover:bg-tertiary-container transition-colors px-3 py-1 rounded-lg" href="#">Profile</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed p-2 hover:bg-surface-container-high rounded-full cursor-pointer">search</span>
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xs">JD</div>
+</div>
+</div>
+</header>
+<main class="pt-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto space-y-gutter pb-12">
+<!-- Key Metrics Row -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Active Orders -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-[0px_4px_12px_rgba(26,43,60,0.08)] flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Active Orders</span>
+<span class="material-symbols-outlined text-secondary">local_shipping</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-display-lg text-4xl text-on-surface">42</span>
+<span class="text-green-600 font-label-sm text-label-sm flex items-center">+5 today</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">8 in transit, 34 processing</p>
+</div>
+<!-- Inventory Value -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-[0px_4px_12px_rgba(26,43,60,0.08)] flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Inventory Value</span>
+<span class="material-symbols-outlined text-secondary">inventory_2</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-display-lg text-4xl text-on-surface">$128.4k</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">842 SKUs</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Updated 12 mins ago</p>
+</div>
+<!-- Profit Margin -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-[0px_4px_12px_rgba(26,43,60,0.08)] flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Estimated Margin</span>
+<span class="material-symbols-outlined text-secondary">trending_up</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-display-lg text-4xl text-on-surface">18.4%</span>
+<span class="text-green-600 font-label-sm text-label-sm">+1.2% pts</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Benchmark: 15.5% (Industry)</p>
+</div>
+</section>
+<!-- Main Dashboard Bento Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Search & Low Stock (8 cols) -->
+<div class="lg:col-span-8 space-y-gutter">
+<!-- B2B Search Bar -->
+<div class="bg-surface-container-lowest p-gutter rounded-xl border border-outline-variant shadow-[0px_4px_12px_rgba(26,43,60,0.08)]">
+<div class="flex flex-col md:flex-row gap-4">
+<div class="relative flex-1 group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-secondary">search</span>
+<input class="w-full pl-12 pr-4 py-4 rounded-lg border-outline border focus:ring-4 focus:ring-primary-container/20 focus:border-primary outline-none transition-all font-body-md text-body-md" placeholder="Search by SKU, Brand, or Dimension (e.g. 225/45R17)..." type="text"/>
+</div>
+<button class="bg-secondary text-on-secondary px-8 py-4 rounded-lg font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-all border-b-2 border-on-secondary-fixed-variant">
+                            Find Inventory
+                        </button>
+</div>
+</div>
+<!-- Just-In-Time Replenishment -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-[0px_4px_12px_rgba(26,43,60,0.08)]">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Just-In-Time Replenishment</h2>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">3 Items Low Stock</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-high">
+<tr>
+<th class="p-4 font-label-sm text-label-sm text-on-surface-variant uppercase">Product Details</th>
+<th class="p-4 font-label-sm text-label-sm text-on-surface-variant uppercase">Stock</th>
+<th class="p-4 font-label-sm text-label-sm text-on-surface-variant uppercase">Wholesale Price</th>
+<th class="p-4 font-label-sm text-label-sm text-on-surface-variant uppercase text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-surface-container rounded-md flex items-center justify-center overflow-hidden">
+<img alt="Tire SKU" class="w-full h-full object-cover" data-alt="A high-contrast studio photograph of a premium performance car tire showing intricate tread patterns. The lighting is dramatic and industrial, highlighting the rubber texture and metallic reflections on the rim. The style is professional, automotive-focused, using deep blacks and subtle highlights to convey durability and precision engineering." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9EmGL6BTWtIZlQIxFgpwQz4n0QtVDoSU8yEMGdfHJaEUUrssSg2GOZBdcZ_-p7BK_xwlAGlEOkj-axhe91_zLytgnWglA_Yo3tDVaWr6Laad4iSdfFSfvu-et_LXAPBfg-e8qFSwsz-y6Qx-345SFd60SY_oeJumVrysNdDTrLmLbW2RilykR5s7gm7qjn77nMCePFwVyG622EvrSjO-8YAc5IINV_a2b3DyiSif3mDJajIVkD1-VVKtktIyyVbT0D6bYMIvXyw"/>
+</div>
+<div>
+<div class="font-bold text-on-surface">Michelin Pilot Sport 4S</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">245/35ZR19 | SKU: MIC-4592</div>
+</div>
+</div>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+<span class="font-label-md text-label-md text-error">2 Left</span>
+</div>
+</td>
+<td class="p-4">
+<div class="font-label-md text-label-md text-on-surface">$242.50 <span class="text-on-surface-variant text-xs font-normal">/unit</span></div>
+<div class="text-[10px] text-green-600 font-bold uppercase">-12% Tier 2 Discount</div>
+</td>
+<td class="p-4 text-right">
+<button class="bg-secondary text-on-secondary px-4 py-2 rounded-full font-label-md text-label-md hover:scale-105 transition-transform">Reorder x4</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-surface-container rounded-md flex items-center justify-center overflow-hidden">
+<img alt="Tire SKU" class="w-full h-full object-cover" data-alt="A macro shot of a rugged all-terrain tire tread covered in slight dust, suggesting utility and toughness. The environment is a clean, minimalist warehouse setting with industrial grey tones. The lighting is diffused, emphasizing the aggressive tread blocks and the high-quality rubber material of the tire." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA19lByD-h9MwUvbduwxHf3b9xbkVH5Vc2xH4Hai5kZCOs0Q-l0CBy3XUHBLG14XNoKzFo7V9pozcJB84z1FmIZT6YFAnlOhWrvC9tY96WqjTAuBDeb_x5DjJja1uzx5au6xgnAh8cR4c4mtLUloMSpRToI6nR8NzkaDYUguIdgYPw0NE57Mj_uGFpyJkpUaMmWD1xtjSf6XAJf_OPzkvbAQJZEMwuvE2xJx3tuKYBORLwpNU6qkWoiPgKaoB344qYJRBCRKMXT2Q"/>
+</div>
+<div>
+<div class="font-bold text-on-surface">Bridgestone Potenza RE980</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">225/45R17 | SKU: BRI-9901</div>
+</div>
+</div>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="font-label-md text-label-md text-error">1 Left</span>
+</div>
+</td>
+<td class="p-4">
+<div class="font-label-md text-label-md text-on-surface">$158.20 <span class="text-on-surface-variant text-xs font-normal">/unit</span></div>
+</td>
+<td class="p-4 text-right">
+<button class="bg-secondary text-on-secondary px-4 py-2 rounded-full font-label-md text-label-md hover:scale-105 transition-transform">Reorder x8</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+<!-- Right Column: Market Intelligence & Tools (4 cols) -->
+<div class="lg:col-span-4 space-y-gutter">
+<!-- Market Intelligence -->
+<section class="bg-primary text-on-primary p-6 rounded-xl shadow-lg relative overflow-hidden">
+<div class="relative z-10 space-y-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-container">query_stats</span>
+<h2 class="font-headline-md text-headline-md">Market Intel</h2>
+</div>
+<p class="font-body-sm text-body-sm opacity-80">Rubber prices are projected to rise by 4.2% next month. Consider stocking up on Tier 1 SKUs.</p>
+<div class="bg-primary-container p-4 rounded-lg space-y-3">
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md">Winter Tires Trend</span>
+<span class="text-green-400 flex items-center font-bold">+22%</span>
+</div>
+<div class="w-full h-2 bg-on-primary/10 rounded-full overflow-hidden">
+<div class="bg-secondary-container h-full w-[70%]"></div>
+</div>
+</div>
+<button class="w-full py-3 border border-on-primary/20 rounded-lg font-bold hover:bg-on-primary/5 transition-colors flex items-center justify-center gap-2">
+                            Full Market Report
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<!-- Subtle background decoration -->
+<div class="absolute -right-12 -bottom-12 w-48 h-48 bg-secondary/10 rounded-full blur-3xl"></div>
+</section>
+<!-- Quick Tools -->
+<section class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-[0px_4px_12px_rgba(26,43,60,0.08)] space-y-4">
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Business Tools</h3>
+<div class="grid grid-cols-1 gap-3">
+<a class="flex items-center justify-between p-4 bg-surface rounded-lg hover:bg-surface-container transition-all group" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary group-hover:text-secondary transition-colors">description</span>
+<span class="font-body-md text-body-md font-medium text-on-surface">Download Invoices</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">download</span>
+</a>
+<a class="flex items-center justify-between p-4 bg-surface rounded-lg hover:bg-surface-container transition-all group" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary group-hover:text-secondary transition-colors">receipt_long</span>
+<span class="font-body-md text-body-md font-medium text-on-surface">Tax Documents</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-4 bg-surface rounded-lg hover:bg-surface-container transition-all group" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary group-hover:text-secondary transition-colors">support_agent</span>
+<span class="font-body-md text-body-md font-medium text-on-surface">Dedicated Support</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chat</span>
+</a>
+</div>
+</section>
+<!-- Recent Activity -->
+<section class="p-6">
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest mb-4">Recent Activity</h3>
+<div class="space-y-4">
+<div class="flex gap-4">
+<div class="relative">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container text-sm">check</span>
+</div>
+<div class="absolute top-8 left-1/2 -translate-x-1/2 w-0.5 h-6 bg-outline-variant"></div>
+</div>
+<div>
+<p class="text-body-sm font-bold">Order #TYR-9812 delivered</p>
+<p class="text-xs text-on-surface-variant">2 hours ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-on-tertiary-fixed text-sm">payment</span>
+</div>
+<div>
+<p class="text-body-sm font-bold">Invoice #INV-204 paid</p>
+<p class="text-xs text-on-surface-variant">Yesterday</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 pb-safe px-4 bg-surface-container-lowest shadow-[0px_-4px_12px_rgba(26,43,60,0.08)] rounded-t-xl border-t border-outline-variant">
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-1 scale-90 duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="font-label-sm text-label-sm">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span class="font-label-sm text-label-sm">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-sm text-label-sm">Inventory</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<!-- Micro-interaction script -->
+<script>
+        document.querySelectorAll('button, a').forEach(elem => {
+            elem.addEventListener('mousedown', () => {
+                elem.style.transform = 'scale(0.95)';
+            });
+            elem.addEventListener('mouseup', () => {
+                elem.style.transform = 'scale(1)';
+            });
+            elem.addEventListener('mouseleave', () => {
+                elem.style.transform = 'scale(1)';
+            });
+        });
+
+        // Simple mock search functionality
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.style.boxShadow = '0 0 0 4px rgba(252, 119, 40, 0.1)';
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.style.boxShadow = 'none';
+        });
+    </script>
+</body></html>
