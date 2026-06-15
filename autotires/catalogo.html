@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AutoTire - Product Catalog</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed-variant": "#3c475a",
+                    "tertiary-container": "#1f2a3b",
+                    "on-secondary-fixed": "#341000",
+                    "on-surface-variant": "#44474c",
+                    "on-background": "#191c1d",
+                    "on-secondary-fixed-variant": "#7a3000",
+                    "error-container": "#ffdad6",
+                    "error": "#ba1a1a",
+                    "on-error": "#ffffff",
+                    "secondary-fixed": "#ffdbcb",
+                    "on-primary": "#ffffff",
+                    "outline-variant": "#c4c6cd",
+                    "tertiary-fixed-dim": "#bcc7dd",
+                    "surface-dim": "#d9dadb",
+                    "inverse-primary": "#b7c8de",
+                    "on-tertiary": "#ffffff",
+                    "surface-container": "#edeeef",
+                    "secondary-container": "#fc7728",
+                    "inverse-surface": "#2e3132",
+                    "surface-container-high": "#e7e8e9",
+                    "tertiary": "#0a1526",
+                    "inverse-on-surface": "#f0f1f2",
+                    "on-secondary": "#ffffff",
+                    "surface": "#f8f9fa",
+                    "primary-container": "#1a2b3c",
+                    "on-primary-fixed-variant": "#38485a",
+                    "surface-variant": "#e1e3e4",
+                    "on-secondary-container": "#5d2300",
+                    "on-primary-container": "#8192a7",
+                    "surface-container-lowest": "#ffffff",
+                    "background": "#f8f9fa",
+                    "on-tertiary-container": "#8691a6",
+                    "secondary-fixed-dim": "#ffb693",
+                    "surface-tint": "#4f6073",
+                    "surface-bright": "#f8f9fa",
+                    "primary-fixed-dim": "#b7c8de",
+                    "secondary": "#a04100",
+                    "outline": "#74777d",
+                    "on-surface": "#191c1d",
+                    "tertiary-fixed": "#d8e3fa",
+                    "on-primary-fixed": "#0b1d2d",
+                    "surface-container-low": "#f3f4f5",
+                    "primary-fixed": "#d2e4fb",
+                    "on-tertiary-fixed": "#111c2c",
+                    "on-error-container": "#93000a",
+                    "primary": "#041627",
+                    "surface-container-highest": "#e1e3e4"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "container-max": "1280px",
+                    "margin-desktop": "32px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-md": ["Inter"],
+                    "label-md": ["JetBrains Mono"],
+                    "display-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "14px", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tire-card-shadow {
+            box-shadow: 0px 4px 12px rgba(26, 43, 60, 0.08);
+        }
+        .filter-drawer-transition {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md antialiased">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-surface border-b border-outline-variant flex justify-between items-center px-margin-mobile md:px-margin-desktop py-base">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer">location_on</span>
+<h1 class="font-display-lg text-secondary tracking-tight font-black text-2xl md:text-3xl">AutoTire</h1>
+</div>
+<div class="hidden md:flex items-center gap-gutter">
+<nav class="flex gap-6">
+<a class="text-secondary font-bold font-label-md text-label-md hover:bg-surface-container-high transition-colors px-3 py-1 rounded" href="#">Search</a>
+<a class="text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-colors px-3 py-1 rounded" href="#">Orders</a>
+<a class="text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-colors px-3 py-1 rounded" href="#">Inventory</a>
+</nav>
+<button class="material-symbols-outlined text-primary p-2 hover:bg-surface-container-high rounded-full transition-all">search</button>
+</div>
+<button class="md:hidden material-symbols-outlined text-primary" onclick="toggleFilters()">filter_list</button>
+</header>
+<!-- Main Content Layout -->
+<main class="pt-24 pb-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto flex gap-gutter">
+<!-- Sidebar Filters (Desktop) -->
+<aside class="hidden md:block w-72 shrink-0 space-y-8">
+<div>
+<h3 class="font-label-md text-label-md uppercase text-outline mb-4">Quick Filter</h3>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl border border-outline-variant">
+<span class="font-body-sm text-body-sm">Installation Included</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary-container"></div>
+</label>
+</div>
+</div>
+<section>
+<h3 class="font-label-md text-label-md uppercase text-outline mb-4">Brand</h3>
+<div class="space-y-3">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-5 h-5 rounded border-outline text-secondary focus:ring-secondary" type="checkbox"/>
+<span class="font-body-md text-body-md group-hover:text-secondary transition-colors">Michelin</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="w-5 h-5 rounded border-outline text-secondary focus:ring-secondary" type="checkbox"/>
+<span class="font-body-md text-body-md group-hover:text-secondary transition-colors">Bridgestone</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-5 h-5 rounded border-outline text-secondary focus:ring-secondary" type="checkbox"/>
+<span class="font-body-md text-body-md group-hover:text-secondary transition-colors">Pirelli</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-5 h-5 rounded border-outline text-secondary focus:ring-secondary" type="checkbox"/>
+<span class="font-body-md text-body-md group-hover:text-secondary transition-colors">Continental</span>
+</label>
+</div>
+</section>
+<section>
+<h3 class="font-label-md text-label-md uppercase text-outline mb-4">Price Range</h3>
+<div class="px-2">
+<input class="w-full h-2 bg-surface-variant rounded-lg appearance-none cursor-pointer accent-secondary" max="1000" min="50" type="range"/>
+<div class="flex justify-between mt-2 font-label-sm text-label-sm text-on-surface-variant">
+<span>$50</span>
+<span>$1,000+</span>
+</div>
+</div>
+</section>
+<section>
+<h3 class="font-label-md text-label-md uppercase text-outline mb-4">DOT (Year)</h3>
+<div class="grid grid-cols-2 gap-2">
+<button class="py-2 px-3 border border-outline-variant rounded-lg font-label-md text-label-md hover:border-secondary hover:text-secondary transition-all">2024</button>
+<button class="py-2 px-3 border border-secondary bg-secondary-container text-on-secondary-container rounded-lg font-label-md text-label-md">2023</button>
+<button class="py-2 px-3 border border-outline-variant rounded-lg font-label-md text-label-md hover:border-secondary hover:text-secondary transition-all">2022</button>
+<button class="py-2 px-3 border border-outline-variant rounded-lg font-label-md text-label-md hover:border-secondary hover:text-secondary transition-all">Older</button>
+</div>
+</section>
+</aside>
+<!-- Product Grid -->
+<div class="flex-1">
+<div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary mb-1">Performance Tires</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Showing 24 results for "205/55R16"</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface-variant">Sort by:</span>
+<select class="bg-transparent border-none font-bold text-secondary focus:ring-0 cursor-pointer">
+<option>Popularity</option>
+<option>Price: Low to High</option>
+<option>Price: High to Low</option>
+</select>
+</div>
+</div>
+<!-- Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Product Card 1 -->
+<div class="tire-card-shadow bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden group hover:border-secondary transition-all flex flex-col">
+<div class="relative h-64 overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Close up high-resolution macro shot of a performance tire tread pattern. The lighting is dramatic and industrial, highlighting the deep grooves and technical texture of the rubber. The aesthetic is clean and modern, set against a dark, minimalist showroom background with soft blue ambient light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPJLb5-We3NPSiDbG12Cn8Z4A7xBJgmM5KWIIcgHdrq9_e1IvOpHYFTJRzjMKjQjx3DhGnadRqOTifxn8oD_a-cTTnugh9Yhyr9YzwxiuQDPHaBWRKrn4taB_4cJSl4W9MnoDuzLO_-unF8QdaV8tcaOLynf7gc96t1zvLtb6VDn3VmZ6C0Tead0usqdF6vnKaE0-TUUx42LHW73VmCPc71RUAVIzYNe_O8fRYnQ9QVqGawSZDv7t6X-fgoCZqc_cUyFKn_N_Tbw"/>
+<div class="absolute top-4 left-4 bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-label-sm text-label-sm shadow-sm">
+                            Bestseller
+                        </div>
+</div>
+<div class="p-6 flex flex-col flex-1">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-md text-label-md text-secondary uppercase tracking-wider">Bridgestone</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">DOT 2023</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-1">Potenza RE050A</h3>
+<p class="font-label-md text-label-md text-on-surface-variant mb-4">205/55R16 91V</p>
+<div class="mt-auto space-y-4">
+<div class="flex items-center gap-2 text-on-tertiary-container">
+<span class="material-symbols-outlined text-green-600 text-lg">check_circle</span>
+<span class="font-body-sm text-body-sm">Installation Available</span>
+</div>
+<div class="flex items-end justify-between">
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-primary">$124.99</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">4,450.00 VES</span>
+</div>
+<button class="bg-secondary text-white w-12 h-12 rounded-lg flex items-center justify-center hover:opacity-80 active:scale-95 transition-all shadow-[0px_2px_0px_#7a3000]">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="tire-card-shadow bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden group hover:border-secondary transition-all flex flex-col">
+<div class="relative h-64 overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Professional studio photograph of an all-season tire with a complex symmetrical tread design. The lighting is crisp and even, emphasizing the industrial precision of the product. The scene is bright and airy with a cool-toned, high-end retail atmosphere, using whites and subtle grays." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqMxXC-BBRcTL2g11i_yPWsfG3vCt3shgQJtPmT8Nys6c_YNFWJILsmEz1TyNjOWLjtops99YKzf9nAUdH_7jDuHLz9rQPWPEp6uD3K50SL2FcgnUocsWp3fYi-208JFaKcC6YfuRIutb5VkxbNgK6ieu_VaiDbA19_ATquzMnRkC4lt6ODM2c2kfs1sWYPcwu27RgIhvExZeDpJpOR70Sy29AdLm2Ea-KUDySg-JTa9gXrcNxFlWSD8-wms4aRgZE6wpPSYUgNA"/>
+</div>
+<div class="p-6 flex flex-col flex-1">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-md text-label-md text-secondary uppercase tracking-wider">Michelin</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">DOT 2024</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-1">Pilot Sport 4</h3>
+<p class="font-label-md text-label-md text-on-surface-variant mb-4">225/45R17 94Y</p>
+<div class="mt-auto space-y-4">
+<div class="flex items-center gap-2 text-on-tertiary-container">
+<span class="material-symbols-outlined text-green-600 text-lg">check_circle</span>
+<span class="font-body-sm text-body-sm">Installation Available</span>
+</div>
+<div class="flex items-end justify-between">
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-primary">$158.50</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">5,640.00 VES</span>
+</div>
+<button class="bg-secondary text-white w-12 h-12 rounded-lg flex items-center justify-center hover:opacity-80 active:scale-95 transition-all shadow-[0px_2px_0px_#7a3000]">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="tire-card-shadow bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden group hover:border-secondary transition-all flex flex-col">
+<div class="relative h-64 overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A rugged off-road tire with thick, chunky tread blocks captured in a dramatic, low-angle shot. The texture is rough and industrial, suited for high-velocity commerce. The lighting is warm and directional, creating high-contrast highlights on the matte black rubber against a clean, modern warehouse backdrop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQBYoZfFa19D_62Ukwr1EZKxMn1EZ8Rn3RR-Ebb-_vxyIzefYbUHK8X6xmbmkRVEpCAWuhcLJoqfuMdiEioi6o5aVumy9Yj49Hos0xvvNdBemMwXEY58fq5ctNNPdn2DztyD_6zYtQ0Z8kNTIiL6pKyUcK0fIxUnwk20Q_OG592R4eIBq8ATDJCJOqRDRcXjoca7idvTqZF1KiesvBPZnIwXK8Nqhf9oXGjYFC7s6LaFiocvuplVWIr6yHDZ8-zVRKMgq8ZVFqxg"/>
+<div class="absolute bottom-4 right-4 bg-tertiary text-white px-3 py-1 rounded-lg font-label-sm text-label-sm opacity-90">
+                            Winter Only
+                        </div>
+</div>
+<div class="p-6 flex flex-col flex-1">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-md text-label-md text-secondary uppercase tracking-wider">Continental</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">DOT 2022</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-1">WinterContact SI</h3>
+<p class="font-label-md text-label-md text-on-surface-variant mb-4">205/60R16 92H</p>
+<div class="mt-auto space-y-4">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-lg">schedule</span>
+<span class="font-body-sm text-body-sm">Lead time: 3 days</span>
+</div>
+<div class="flex items-end justify-between">
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-primary">$98.00</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">3,490.00 VES</span>
+</div>
+<button class="bg-secondary text-white w-12 h-12 rounded-lg flex items-center justify-center hover:opacity-80 active:scale-95 transition-all shadow-[0px_2px_0px_#7a3000]">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="tire-card-shadow bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden group hover:border-secondary transition-all flex flex-col">
+<div class="relative h-64 overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Top-down detailed view of an ultra-high performance tire tread. The rubber has a sleek, slightly glossy finish, and the intricate siping is visible. Set in a corporate modern studio environment with sharp shadows and bright, neutral light that suggests reliability and precision engineering." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAI0anli5E0J_RzZ0RMFK69d1btjx0tuocoO_igUGlAx7C7Cg3RtJ3zWolBThaOMcs0Y3ya0-aESJYVVgmKGHJ_yhUY7VjsHy-CZWZ0CEYIa1QX8jZDBl6z9W9oj0AJ-KbgshL1ajIXam1gDr-naAuIiCrzH1AkaxS8_tEpA0KxcM7dhuyviTigAOsmcuspbmB4QTk6vJxpMbXu6InyAqnOnKWxqeTPYWehynqIlZqKzZwHa8X4pYwAD2pRTpvaorHouCTpirm4IQ"/>
+</div>
+<div class="p-6 flex flex-col flex-1">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-md text-label-md text-secondary uppercase tracking-wider">Pirelli</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">DOT 2023</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-1">Cinturato P7</h3>
+<p class="font-label-md text-label-md text-on-surface-variant mb-4">245/40R18 97Y</p>
+<div class="mt-auto space-y-4">
+<div class="flex items-center gap-2 text-on-tertiary-container">
+<span class="material-symbols-outlined text-green-600 text-lg">check_circle</span>
+<span class="font-body-sm text-body-sm">Installation Available</span>
+</div>
+<div class="flex items-end justify-between">
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-primary">$189.99</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">6,760.00 VES</span>
+</div>
+<button class="bg-secondary text-white w-12 h-12 rounded-lg flex items-center justify-center hover:opacity-80 active:scale-95 transition-all shadow-[0px_2px_0px_#7a3000]">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- More cards could be here following same pattern -->
+</div>
+<!-- Pagination/Load More -->
+<div class="mt-12 flex justify-center">
+<button class="flex items-center gap-2 border-2 border-primary text-primary font-bold px-8 py-3 rounded-lg hover:bg-primary hover:text-white transition-all">
+                    Load More Results
+                    <span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Mobile Navigation -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 pb-safe px-4 bg-surface-container-lowest shadow-[0px_-4px_12px_rgba(26,43,60,0.08)] rounded-t-xl">
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-1 active:scale-90 duration-150 ease-in-out">
+<span class="material-symbols-outlined">search</span>
+<span class="font-label-sm text-[10px]">Search</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-variant">
+<span class="material-symbols-outlined">local_shipping</span>
+<span class="font-label-sm text-[10px]">Orders</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-variant">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-sm text-[10px]">Inventory</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-variant">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-[10px]">Profile</span>
+</button>
+</nav>
+<!-- Mobile Filter Sidebar (Drawer) -->
+<div class="fixed inset-0 z-[60] hidden" id="mobile-filter-drawer">
+<div class="absolute inset-0 bg-black/50" onclick="toggleFilters()"></div>
+<aside class="absolute top-0 right-0 h-full w-4/5 bg-surface filter-drawer-transition transform translate-x-full overflow-y-auto p-margin-mobile">
+<div class="flex items-center justify-between mb-8">
+<h2 class="font-headline-md text-headline-md">Filters</h2>
+<button class="material-symbols-outlined" onclick="toggleFilters()">close</button>
+</div>
+<!-- Reusing Filter Content for Mobile -->
+<div class="space-y-8">
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl border border-outline-variant">
+<span class="font-body-sm text-body-sm">Installation Included</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary-container"></div>
+</label>
+</div>
+<section>
+<h3 class="font-label-md text-label-md uppercase text-outline mb-4">Brand</h3>
+<div class="space-y-4">
+<label class="flex items-center gap-3">
+<input class="w-6 h-6 rounded border-outline text-secondary" type="checkbox"/>
+<span class="font-body-md text-body-md">Michelin</span>
+</label>
+<label class="flex items-center gap-3">
+<input checked="" class="w-6 h-6 rounded border-outline text-secondary" type="checkbox"/>
+<span class="font-body-md text-body-md">Bridgestone</span>
+</label>
+</div>
+</section>
+<section>
+<h3 class="font-label-md text-label-md uppercase text-outline mb-4">DOT Year</h3>
+<div class="grid grid-cols-2 gap-3">
+<button class="py-3 border border-secondary bg-secondary-container text-on-secondary-container rounded-lg font-label-md">2023</button>
+<button class="py-3 border border-outline-variant rounded-lg font-label-md">2024</button>
+</div>
+</section>
+<button class="w-full bg-primary text-white py-4 rounded-xl font-bold mt-8" onclick="toggleFilters()">Apply Filters</button>
+</div>
+</aside>
+</div>
+<script>
+        function toggleFilters() {
+            const drawer = document.getElementById('mobile-filter-drawer');
+            const aside = drawer.querySelector('aside');
+            if (drawer.classList.contains('hidden')) {
+                drawer.classList.remove('hidden');
+                setTimeout(() => aside.classList.remove('translate-x-full'), 10);
+            } else {
+                aside.classList.add('translate-x-full');
+                setTimeout(() => drawer.classList.add('hidden'), 300);
+            }
+        }
+
+        // Search bar interaction
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if(this.classList.contains('bg-secondary')) {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => this.style.transform = 'scale(1)', 150);
+                }
+            });
+        });
+    </script>
+</body></html>
