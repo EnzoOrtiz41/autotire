@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-surface/90 backdrop-blur-xl border border-outline-variant shadow-lg;
+  }
+}
+
+/* Evitar scroll horizontal */
+body {
+  @apply bg-background text-on-background min-h-screen font-body-md antialiased;
+}
+/* Utilidades personalizadas de AutoTire */
+@layer utilities {
+  .heavy-shadow {
+    box-shadow: 0px 10px 30px rgba(4, 22, 39, 0.15);
+  }
+  .btn-primary {
+    @apply bg-secondary text-white rounded-lg font-headline-sm font-bold transition-all duration-200;
+  }
+  .btn-primary:hover {
+    background-color: #e5661a;
+    transform: scale(0.98);
+  }
+  
+  /* Animación de entrada (Fade in) */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+    opacity: 0;
+  }
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+html { 
+  scroll-behavior: smooth; 
+}
