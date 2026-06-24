@@ -1,210 +1,164 @@
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { PRODUCTOS, FABRICANTES } from '../data/productos';
+
 export default function Catalogo() {
+  const { isB2B } = useAuth();
+  const [searchParams] = useSearchParams();
+  const initialQuery = searchParams.get('q') || '';
+  const [search, setSearch] = useState(initialQuery);
+  const [tipoFiltro, setTipoFiltro] = useState('todos');
+  const [marcaFiltro, setMarcaFiltro] = useState('todos');
+  const [precioMin, setPrecioMin] = useState(0);
+  const [precioMax, setPrecioMax] = useState(500);
+  const [bcv, setBcv] = useState(null);
+
+  useEffect(() => {
+    fetch('https://ve.dolarapi.com/v1/dolares/oficial')
+      .then(r => r.json())
+      .then(d => setBcv(d.promedio || d.precio))
+      .catch(() => setBcv(65));
+  }, []);
+
+  const tipos = ['todos', 'sedan', 'suv', 'comercial'];
+  const marcas = ['todos', ...new Set(PRODUCTOS.map(p => p.marca))];
+
+  const filtrados = PRODUCTOS.filter(p => {
+    if (tipoFiltro !== 'todos' && p.tipo !== tipoFiltro) return false;
+    if (marcaFiltro !== 'todos' && p.marca !== marcaFiltro) return false;
+    const precio = p.msrp || p.wholesalePrice || 0;
+    if (precio < precioMin || precio > precioMax) return false;
+    if (search && !p.modelo.toLowerCase().includes(search.toLowerCase()) && !p.marca.toLowerCase().includes(search.toLowerCase()) && !p.medida.includes(search)) return false;
+    return true;
+  });
+
   return (
-    <main className="flex-grow w-full max-w-container-max mx-auto px-gutter py-lg flex flex-col md:flex-row gap-lg bg-background text-on-background">
-      
-      {/* Sidebar Filters */}
-      <aside className="w-full md:w-64 flex-shrink-0 flex flex-col gap-md">
-        <div className="bg-surface-container-lowest p-md rounded-xl shadow-sm border border-outline-variant/50">
-          <h3 className="font-headline-sm text-headline-sm mb-sm text-primary">Filtros</h3>
-          
-          {/* Tipo de Vehículo */}
-          <div className="mb-md">
-            <h4 className="font-label-md text-label-md text-on-surface-variant mb-xs">Tipo de Vehículo</h4>
-            <div className="flex flex-col gap-xs">
-              <label className="flex items-center gap-sm cursor-pointer hover:bg-surface-container-low p-1 rounded transition-colors">
-                <input className="form-checkbox h-4 w-4 text-secondary rounded-[4px] border-outline-variant focus:ring-secondary" type="checkbox" />
-                <span className="font-body-md text-body-md text-on-surface">Sedán</span>
-              </label>
-              <label className="flex items-center gap-sm cursor-pointer hover:bg-surface-container-low p-1 rounded transition-colors">
-                <input className="form-checkbox h-4 w-4 text-secondary rounded-[4px] border-outline-variant focus:ring-secondary" type="checkbox" />
-                <span className="font-body-md text-body-md text-on-surface">SUV</span>
-              </label>
-              <label className="flex items-center gap-sm cursor-pointer hover:bg-surface-container-low p-1 rounded transition-colors">
-                <input className="form-checkbox h-4 w-4 text-secondary rounded-[4px] border-outline-variant focus:ring-secondary" type="checkbox" />
-                <span className="font-body-md text-body-md text-on-surface">Camioneta</span>
-              </label>
-            </div>
-          </div>
-
-          <div className="h-px w-full bg-outline-variant/30 my-sm"></div>
-          
-          {/* Marca */}
-          <div className="mb-md">
-            <h4 className="font-label-md text-label-md text-on-surface-variant mb-xs flex justify-between items-center cursor-pointer">
-              Marca <span className="material-symbols-outlined text-[18px]">expand_less</span>
-            </h4>
-            <div className="flex flex-col gap-xs">
-              <label className="flex items-center gap-sm cursor-pointer hover:bg-surface-container-low p-1 rounded transition-colors">
-                <input className="form-checkbox h-4 w-4 text-secondary rounded-[4px] border-outline-variant focus:ring-secondary" type="checkbox" />
-                <span className="font-body-md text-body-md text-on-surface">Bridgestone</span>
-              </label>
-              <label className="flex items-center gap-sm cursor-pointer hover:bg-surface-container-low p-1 rounded transition-colors">
-                <input className="form-checkbox h-4 w-4 text-secondary rounded-[4px] border-outline-variant focus:ring-secondary" type="checkbox" />
-                <span className="font-body-md text-body-md text-on-surface">Michelin</span>
-              </label>
-              <label className="flex items-center gap-sm cursor-pointer hover:bg-surface-container-low p-1 rounded transition-colors">
-                <input className="form-checkbox h-4 w-4 text-secondary rounded-[4px] border-outline-variant focus:ring-secondary" type="checkbox" />
-                <span className="font-body-md text-body-md text-on-surface">Continental</span>
-              </label>
-            </div>
-          </div>
-
-          <div className="h-px w-full bg-outline-variant/30 my-sm"></div>
-          
-          {/* Rango de Precio */}
-          <div className="mb-sm">
-            <h4 className="font-label-md text-label-md text-on-surface-variant mb-xs">Rango de Precio</h4>
-            <input className="w-full h-2 bg-surface-variant rounded-lg appearance-none cursor-pointer accent-secondary" max="500" min="0" type="range" defaultValue="500" />
-            <div className="flex justify-between font-label-sm text-label-sm text-on-surface-variant mt-2">
-              <span>$0</span>
-              <span>$500+</span>
-            </div>
-          </div>
+    <div className="flex-1 bg-surface-variant/30">
+      <div className="max-w-container-max mx-auto px-gutter py-6 animate-fade-in">
+        {/* Header */}
+        <div className="mb-6">
+          <h1 className="text-2xl font-display font-black">Catálogo de Neumáticos</h1>
+          <p className="text-sm text-on-surface-variant mt-1">
+            {bcv ? `BCV: Bs. ${bcv.toFixed(2)} / USD | ` : ''}
+            {filtrados.length} productos disponibles
+          </p>
         </div>
-      </aside>
 
-      {/* Product Area */}
-      <div className="flex-grow flex flex-col gap-md">
-        
-        {/* Header & Search */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-sm mb-sm">
-          <h2 className="font-headline-md text-headline-md text-primary tracking-tight">Encuentra los neumáticos ideales para tu vehículo</h2>
-          <div className="relative w-full md:w-72">
-            <span className="material-symbols-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-outline">search</span>
-            <input className="w-full pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant/50 rounded-full font-body-md text-body-md focus:ring-1 focus:ring-secondary focus:border-secondary outline-none transition-shadow shadow-sm" placeholder="Buscar medida..." type="text" />
-          </div>
-        </div>
-        
-        {/* Product Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-md">
-          
-          {/* Card 1: Bridgestone */}
-          <div className="bg-surface-container-lowest rounded-xl overflow-hidden flex flex-col border border-outline-variant/30 hover:shadow-[0px_10px_30px_rgba(4,22,39,0.15)] transition-shadow duration-300">
-            <div className="h-48 bg-surface-container flex items-center justify-center p-md">
-              <img className="object-contain h-full drop-shadow-xl hover:scale-105 transition-transform duration-500" src="https://images.unsplash.com/photo-1590840131494-1b1ebec9a41b?auto=format&fit=crop&q=80&w=400" alt="Bridgestone Potenza" />
-            </div>
-            <div className="p-md flex flex-col flex-grow">
-              <div className="flex justify-between items-start mb-xs">
-                <h3 className="font-headline-sm text-headline-sm text-primary font-bold">Bridgestone Potenza</h3>
-                <span className="font-headline-sm text-headline-sm text-secondary font-bold">$120.00</span>
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Sidebar Filters */}
+          <div className="lg:w-64 flex-shrink-0">
+            <div className="card space-y-5 lg:sticky lg:top-24">
+              <div>
+                <label className="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Búsqueda</label>
+                <input type="text" value={search} onChange={e => setSearch(e.target.value)} className="input-field mt-1" placeholder="Modelo, medida..." />
               </div>
-              <div className="flex justify-between items-center mb-sm">
-                <span className="font-label-md text-label-md bg-surface-container-high text-on-surface px-2 py-1 rounded">225/45 R17</span>
-                <span className="font-label-sm text-label-sm text-on-surface-variant">Bs. 4,320.00</span>
-              </div>
-              
-              {/* Tech Chips */}
-              <div className="flex gap-xs mb-md">
-                <span className="bg-primary text-on-primary font-label-sm text-label-sm px-2 py-1 rounded-[4px] uppercase tracking-wider">Performance</span>
-                <span className="bg-primary text-on-primary font-label-sm text-label-sm px-2 py-1 rounded-[4px] uppercase tracking-wider">UHP</span>
-              </div>
-
-              {/* Specs Grid */}
-              <div className="grid grid-cols-3 gap-xs mb-md border-t border-outline-variant/30 pt-sm mt-auto">
-                <div>
-                  <div className="font-label-sm text-label-sm text-outline mb-1">Treadwear</div>
-                  <div className="font-label-md text-label-md text-primary font-bold">280</div>
-                </div>
-                <div>
-                  <div className="font-label-sm text-label-sm text-outline mb-1">Traction</div>
-                  <div className="font-label-md text-label-md text-primary font-bold">AA</div>
-                </div>
-                <div>
-                  <div className="font-label-sm text-label-sm text-outline mb-1">Temperature</div>
-                  <div className="font-label-md text-label-md text-primary font-bold">A</div>
+              <div>
+                <label className="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Tipo</label>
+                <div className="flex flex-wrap gap-1.5 mt-1">
+                  {tipos.map(t => (
+                    <button key={t} onClick={() => setTipoFiltro(t)}
+                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+                        tipoFiltro === t ? 'bg-primary text-on-primary' : 'bg-surface-container-highest text-on-surface-variant hover:bg-surface-container'
+                      }`}>
+                      {t === 'todos' ? 'Todos' : t.charAt(0).toUpperCase() + t.slice(1)}
+                    </button>
+                  ))}
                 </div>
               </div>
-
-              <button className="w-full bg-secondary text-on-secondary font-headline-sm text-[16px] py-2 px-4 rounded-lg hover:bg-[#b45309] transition-colors font-bold flex items-center justify-center gap-sm">
-                Agregar al Carrito <span className="material-symbols-outlined text-[20px]">shopping_cart</span>
+              <div>
+                <label className="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Marca</label>
+                <select value={marcaFiltro} onChange={e => setMarcaFiltro(e.target.value)} className="input-field mt-1">
+                  {marcas.map(m => <option key={m} value={m}>{m === 'todos' ? 'Todas' : m}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className="text-xs font-bold text-on-surface-variant uppercase tracking-wider">
+                  Precio ${precioMin} - ${precioMax}
+                </label>
+                <div className="flex items-center gap-2 mt-1">
+                  <input type="range" min="0" max="500" value={precioMin} onChange={e => setPrecioMin(Number(e.target.value))} className="flex-1 accent-primary" />
+                  <input type="range" min="0" max="500" value={precioMax} onChange={e => setPrecioMax(Number(e.target.value))} className="flex-1 accent-primary" />
+                </div>
+              </div>
+              <button onClick={() => { setSearch(''); setTipoFiltro('todos'); setMarcaFiltro('todos'); setPrecioMin(0); setPrecioMax(500); }}
+                className="btn-secondary w-full text-sm">
+                Limpiar
               </button>
             </div>
           </div>
 
-          {/* Card 2: Michelin */}
-          <div className="bg-surface-container-lowest rounded-xl overflow-hidden flex flex-col border border-outline-variant/30 hover:shadow-[0px_10px_30px_rgba(4,22,39,0.15)] transition-shadow duration-300">
-            <div className="h-48 bg-surface-container flex items-center justify-center p-md">
-              <img className="object-contain h-full drop-shadow-xl hover:scale-105 transition-transform duration-500" src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=400" alt="Michelin Pilot Sport 4" />
-            </div>
-            <div className="p-md flex flex-col flex-grow">
-              <div className="flex justify-between items-start mb-xs">
-                <h3 className="font-headline-sm text-headline-sm text-primary font-bold">Michelin Pilot Sport 4</h3>
-                <span className="font-headline-sm text-headline-sm text-secondary font-bold">$180.00</span>
+          {/* Product Grid */}
+          <div className="flex-1">
+            {filtrados.length === 0 ? (
+              <div className="card text-center py-12">
+                <span className="material-symbols-outlined text-5xl text-on-surface-variant/50 mb-2">search_off</span>
+                <p className="text-on-surface-variant">No se encontraron productos. Ajusta los filtros.</p>
               </div>
-              <div className="flex justify-between items-center mb-sm">
-                <span className="font-label-md text-label-md bg-surface-container-high text-on-surface px-2 py-1 rounded">245/40 R18</span>
-                <span className="font-label-sm text-label-sm text-on-surface-variant">Bs. 6,480.00</span>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                {filtrados.map(p => {
+                  const fabricante = FABRICANTES.find(f => f.id === p.fabricanteId);
+                  const precio = isB2B ? p.wholesalePrice : p.msrp;
+                  return (
+                    <div key={p.id} className="card-hover group">
+                      <div className="h-28 rounded-xl bg-gradient-to-br from-surface-container-highest to-surface-container flex items-center justify-center mb-3">
+                        <span className="text-3xl font-display font-black text-primary/30 group-hover:text-primary/60 transition-colors">
+                          {fabricante?.logo || p.marca[0]}
+                        </span>
+                      </div>
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="min-w-0">
+                          <p className="font-bold text-sm truncate">{p.modelo}</p>
+                          <p className="text-xs text-on-surface-variant">{p.medida}</p>
+                        </div>
+                        <span className={`badge text-[10px] whitespace-nowrap ml-2 ${
+                          p.tipo === 'comercial' ? 'badge-warning' : p.tipo === 'suv' ? 'badge-secondary' : 'badge-primary'
+                        }`}>
+                          {p.tipo}
+                        </span>
+                      </div>
+                      {isB2B && (
+                        <div className="mb-2 flex items-center gap-2 text-xs">
+                          <span className="badge-success">MOQ: {p.moq}</span>
+                          {p.wholesalePrice && p.msrp && (
+                            <span className="text-green-700 font-semibold">
+                              Ahorras ${(p.msrp - p.wholesalePrice).toFixed(2)}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                      <div className="flex items-center gap-1 text-xs text-on-surface-variant mb-3">
+                        <span className="material-symbols-outlined text-amber-500 text-base">star</span>
+                        <span className="font-semibold">{p.rating}</span>
+                        <span>·</span>
+                        <span>{fabricante?.nombre || p.marca}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="text-lg font-display font-black text-primary">${precio?.toFixed(2)}</span>
+                          {isB2B && p.msrp && (
+                            <span className="text-xs text-on-surface-variant line-through ml-1">${p.msrp?.toFixed(2)}</span>
+                          )}
+                          <p className="text-[10px] text-on-surface-variant">
+                            {isB2B ? 'Precio mayorista' : 'Precio público'}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1 text-[10px] text-on-surface-variant mt-2 pt-2 border-t border-outline-variant/20">
+                        <span className="font-bold">UTQG:</span>
+                        <span>{p.specs?.treadwear}</span>
+                        <span>· Tracción {p.specs?.traction}</span>
+                        <span>· Temp. {p.specs?.temperature}</span>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-              
-              <div className="flex gap-xs mb-md">
-                <span className="bg-primary text-on-primary font-label-sm text-label-sm px-2 py-1 rounded-[4px] uppercase tracking-wider">Sport</span>
-                <span className="bg-primary text-on-primary font-label-sm text-label-sm px-2 py-1 rounded-[4px] uppercase tracking-wider">UHP</span>
-              </div>
-
-              <div className="grid grid-cols-3 gap-xs mb-md border-t border-outline-variant/30 pt-sm mt-auto">
-                <div>
-                  <div className="font-label-sm text-label-sm text-outline mb-1">Treadwear</div>
-                  <div className="font-label-md text-label-md text-primary font-bold">320</div>
-                </div>
-                <div>
-                  <div className="font-label-sm text-label-sm text-outline mb-1">Traction</div>
-                  <div className="font-label-md text-label-md text-primary font-bold">AA</div>
-                </div>
-                <div>
-                  <div className="font-label-sm text-label-sm text-outline mb-1">Temperature</div>
-                  <div className="font-label-md text-label-md text-primary font-bold">A</div>
-                </div>
-              </div>
-
-              <button className="w-full bg-secondary text-on-secondary font-headline-sm text-[16px] py-2 px-4 rounded-lg hover:bg-[#b45309] transition-colors font-bold flex items-center justify-center gap-sm">
-                Agregar al Carrito <span className="material-symbols-outlined text-[20px]">shopping_cart</span>
-              </button>
-            </div>
+            )}
           </div>
-
-          {/* Card 3: Continental */}
-          <div className="bg-surface-container-lowest rounded-xl overflow-hidden flex flex-col border border-outline-variant/30 hover:shadow-[0px_10px_30px_rgba(4,22,39,0.15)] transition-shadow duration-300">
-            <div className="h-48 bg-surface-container flex items-center justify-center p-md">
-              <img className="object-contain h-full drop-shadow-xl hover:scale-105 transition-transform duration-500" src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=400" alt="Continental WinterContact" />
-            </div>
-            <div className="p-md flex flex-col flex-grow">
-              <div className="flex justify-between items-start mb-xs">
-                <h3 className="font-headline-sm text-headline-sm text-primary font-bold">Continental WinterContact</h3>
-                <span className="font-headline-sm text-headline-sm text-secondary font-bold">$105.00</span>
-              </div>
-              <div className="flex justify-between items-center mb-sm">
-                <span className="font-label-md text-label-md bg-surface-container-high text-on-surface px-2 py-1 rounded">215/55 R16</span>
-                <span className="font-label-sm text-label-sm text-on-surface-variant">Bs. 3,780.00</span>
-              </div>
-              
-              <div className="flex gap-xs mb-md">
-                <span className="bg-primary text-on-primary font-label-sm text-label-sm px-2 py-1 rounded-[4px] uppercase tracking-wider">Winter</span>
-                <span className="bg-primary text-on-primary font-label-sm text-label-sm px-2 py-1 rounded-[4px] uppercase tracking-wider">Touring</span>
-              </div>
-
-              <div className="grid grid-cols-3 gap-xs mb-md border-t border-outline-variant/30 pt-sm mt-auto">
-                <div>
-                  <div className="font-label-sm text-label-sm text-outline mb-1">Treadwear</div>
-                  <div className="font-label-md text-label-md text-primary font-bold">400</div>
-                </div>
-                <div>
-                  <div className="font-label-sm text-label-sm text-outline mb-1">Traction</div>
-                  <div className="font-label-md text-label-md text-primary font-bold">A</div>
-                </div>
-                <div>
-                  <div className="font-label-sm text-label-sm text-outline mb-1">Temperature</div>
-                  <div className="font-label-md text-label-md text-primary font-bold">B</div>
-                </div>
-              </div>
-
-              <button className="w-full bg-secondary text-on-secondary font-headline-sm text-[16px] py-2 px-4 rounded-lg hover:bg-[#b45309] transition-colors font-bold flex items-center justify-center gap-sm">
-                Agregar al Carrito <span className="material-symbols-outlined text-[20px]">shopping_cart</span>
-              </button>
-            </div>
-          </div>
-
         </div>
       </div>
-    </main>
+    </div>
   );
 }
